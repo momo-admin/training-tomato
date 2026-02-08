@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="style.css">
+
+<div class="app">
+  <h1>たまちん貯筋トレ <small><span id="continuationDate">1</span>日目</small></h1>
+  
+  <details class="details">
+    <summary class="details-summary">
+      <span>前日<span id="yesterdayDate"></span>の投稿</span>
+    </summary>
+    <p>あ</p>
+  </details>
+  
+  <div class="status-card">
+    <div class="status-item">
+      <p>🍅 筋トレ</p>
+      <span class="item">今日<span id="todayWorkout">0</span><small>min</small></span>
+      <span class="item">借金<span id="debtWorkout">0</span><small>min</small></span>
+    </div>
+    <div class="status-item">
+      <p>🍲 貯金</p>
+      <span class="item">入金予定<span id="scheduleMoney">0</span><small>円</small></span>
+      <span class="item">累計<span id="totalMoney">0</span><small>円</small></span>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <h2>手動ボタン</h2>
+    <button onclick="addPost()">新規投稿 (+10min)</button>
+    <button onclick="doWorkout()">筋トレ 10min</button>
+    <button onclick="skipWork()">借金【x1.5 ペナ】</button>
+    <button onclick="doPayment()">口座入金完了</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
