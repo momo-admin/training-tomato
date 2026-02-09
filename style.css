@@ -6,76 +6,15 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden; /* スクロールさせない */
+  align-items: flex-start; /* 上に詰める */
+  min-height: 100vh;
+  overflow-y: auto;       /* スクロールを許可 */
+  padding-top: 30px;
 }
 
-/* アプリのコンテナ */
 .app {
   width: 90%;
   max-width: 400px;
-  background: #1e293b;
-  padding: 24px;
-  border-radius: 32px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.details {
-  transition: .3s;
-  overflow: hidden;
-  margin-top: -10px;
-  padding-bottom: 20px;
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-}
-.details[open] {
-  margin-top: 0;
-  padding-bottom: 10px;
-} 
-.details-summary {
-  display: block;
-  padding: 15px;
-  transition: .3s;
-  transform: translateY(10px);
-  background-color: #00a5a0;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  &:hover {
-    cursor: pointer;
-  }
-}
-.details-summary::-webkit-details-marker {
-  display: none;
-}
-.details[open] .details-summary {
-  transform: translateY(0);
-}
-.details-content {
-  dding: 20px;
-  ckground-color: #bee1de;
-  rder-bottom: 2px solid #00a5a0;
-  rder-left: 2px solid #00a5a0;
-  rder-right: 2px solid #00a5a0;
-}
-
-h1 {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 24px;
-  letter-spacing: 2px;
-  color: #38bdf8;
-}
-
-h2 {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-  color: #38bdf8;
 }
 
 /* 記録を表示するカード */
@@ -103,10 +42,7 @@ h2 {
   color: #94a3b8;
 }
 
-#todayWorkout,
-#debtWorkout,
-#scheduleMoney,
-#totalMoney {
+#todayWorkout, #debtWorkout, #scheduleMoney, #totalMoney {
   font-size: 24px;
   font-weight: bold;
   display: inline;
@@ -115,17 +51,64 @@ h2 {
 
 .item {
   font-size: 14px;
-  font-weight: normal;
   display: flex;
   gap: 8px;
   align-items: baseline;
+}
+
+/* タブボタン */
+.tab-btn {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.btn {
+  flex: 1;
+  text-align: center;
+}
+
+.btn a {
+  display: block;
+  padding: 12px 0;
+  background-color: #fff;
+  color: #181716;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 15px 15px 0 0; /* 上だけ丸く */
+  margin-right: 1px;
+}
+
+.btn:last-child a {
+  margin-right: 0;
+}
+
+.btn a.is-active {
+  background-color: #ececec;
+}
+
+/* タブコンテンツエリア */
+.tab-contents-item {
+  display: none;
+  width: 100%;
+  box-sizing: border-box; /* はみ出し防止 */
+}
+
+.tab-contents-item.is-active {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ececec;
+  padding: 20px;
+  border-radius: 0 0 20px 20px; /* 下だけ丸くして合体 */
 }
 
 /* ボタンのデザイン */
 .actions button {
   width: 100%;
   padding: 18px;
-  margin-bottom: 12px;
   border: none;
   border-radius: 16px;
   font-size: 16px;
@@ -134,27 +117,9 @@ h2 {
   transition: all 0.2s;
 }
 
-/* 新規投稿 */
-button:nth-child(2) {
-  background: transparent;
-  color: #38bdf8;
-  border: 2px solid #38bdf8;
-}
+button:nth-child(1) { background: #4C9141; color: white; }
+button:nth-child(2) { background: #F15B55; color: white; }
+button:nth-child(3) { background: #38BDF8; color: white; }
+button:active { transform: scale(0.95); opacity: 0.8; }
 
-/* 筋トレ */
-button:nth-child(3) {
-  background: #4C9141;
-  color: #38bdf8;
-}
-
-/* 借金 */
-button:nth-child(4) {
-  background: #F15B55;
-  color: white;
-}
-
-/* 押した時のアニメーション */
-button:active {
-  transform: scale(0.95);
-  opacity: 0.8;
-}
+h1 { font-size: 20px; text-align: center; margin-bottom: 24px; color: #38bdf8; }

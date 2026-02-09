@@ -1,15 +1,16 @@
-<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>たまちん貯筋トレ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="app">
   <h1>たまちん貯筋トレ <small><span id="continuationDate">1</span>日目</small></h1>
-  
-  <details class="details">
-    <summary class="details-summary">
-      <span>前日<span id="yesterdayDate"></span>の投稿</span>
-    </summary>
-    <p>あ</p>
-  </details>
   
   <div class="status-card">
     <div class="status-item">
@@ -24,13 +25,32 @@
     </div>
   </div>
   
-  <div class="actions">
-    <h2>手動ボタン</h2>
-    <button onclick="addPost()">新規投稿 (+10min)</button>
-    <button onclick="doWorkout()">筋トレ 10min</button>
-    <button onclick="skipWork()">借金【x1.5 ペナ】</button>
-    <button onclick="doPayment()">口座入金完了</button>
+  <div class="tab-btn" id="tab-btn">
+    <div class="btn"><a data-tab="#menu1">💪ワーク</a></div>
+    <div class="btn"><a data-tab="#menu2">🍅投稿</a></div>
+    <div class="btn"><a data-tab="#menu3">⚙設定</a></div>
+  </div>
+  
+  <div id="tab-contents">
+    <div id="menu1" class="actions tab-contents-item">
+      <button onclick="doWorkout()">筋トレ 10min</button>
+      <button onclick="skipWork()">借金【x1.5 ペナ】</button>
+      <button onclick="doPayment()">口座入金完了</button>
+    </div>
+    
+    <div id="menu2" class="actions tab-contents-item">
+      <button onclick="addPost()">新規投稿 (+10min)</button>
+      <p>投稿を同期する機能追加予定</p>
+      <p>取得できなかった時に新規投稿ボタンを表示する</p>
+    </div>
+    
+    <div id="menu3" class="actions tab-contents-item">
+      <p>入力修正追加予定</p>
+      <button onclick="addPostああああああ()">入力修正</button>
+    </div>
   </div>
 </div>
 
 <script src="script.js"></script>
+</body>
+</html>
