@@ -2,10 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>たまちん貯筋トレ</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -39,12 +38,16 @@
       <button onclick="doPayment()">口座入金完了</button>
     </div>
     
-    <div id="menu2" class="actions tab-contents-item">
-      <p>投稿を同期する機能追加予定</p>
+    <div id="menu2" class="tab-contents-item">
+      <h2 class="tab-inner-title">昨日の新着動画</h2>
+      <div id="videoList" class="video-scroll-area">
+        <p class="status-msg">読み込み中...</p>
+      </div>
     </div>
     
-    <div id="menu3" class="actions tab-contents-item">
-      <p>手動入力追加予定</p>
+    <div id="menu3" class="tab-contents-item">
+      <h2 class="tab-inner-title">設定</h2>
+      <p style="color: #475569; text-align: center;">ここに手動入力などを追加予定</p>
     </div>
   </div>
 </div>

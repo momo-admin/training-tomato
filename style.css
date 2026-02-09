@@ -1,12 +1,12 @@
-/* --- スクロール完全禁止の設定 --- */
+/* --- スクロール完全禁止（iPhone対応） --- */
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;    /* スクロール禁止 */
-  position: fixed;     /* iPhoneのバウンス防止 */
-  touch-action: none;  /* 指でのスクロールを無効化 */
+  overflow: hidden;
+  position: fixed;
+  touch-action: none;
   background-color: #0f172a;
 }
 
@@ -19,93 +19,63 @@ body {
   padding-top: 30px;
 }
 
-.app {
-  width: 90%;
-  max-width: 400px;
-}
+.app { width: 90%; max-width: 400px; }
 
-/* 記録を表示するカード */
-.status-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.status-item {
-  background: #334155;
-  padding: 16px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-#todayWorkout, #debtWorkout, #scheduleMoney, #totalMoney {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 8px;
-}
+/* ステータス表示 */
+.status-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.status-item { background: #334155; padding: 16px; border-radius: 20px; text-align: center; }
+#todayWorkout, #debtWorkout, #scheduleMoney, #totalMoney { font-size: 24px; font-weight: bold; margin-top: 8px; }
 
 /* タブボタン */
-.tab-btn {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.btn {
-  flex: 1;
-}
-
+.tab-btn { display: flex; width: 100%; }
+.btn { flex: 1; }
 .btn a {
-  display: block;
-  padding: 12px 0;
-  background-color: #fff;
-  color: #181716;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 15px 15px 0 0;
-  margin-right: 1px;
-  text-align: center;
+  display: block; padding: 12px 0; background-color: #fff; color: #181716;
+  text-decoration: none; font-weight: bold; border-radius: 15px 15px 0 0;
+  margin-right: 1px; text-align: center;
 }
+.btn:last-child a { margin-right: 0; }
+.btn a.is-active { background-color: #ececec; }
 
-.btn:last-child a {
-  margin-right: 0;
-}
-
-.btn a.is-active {
-  background-color: #ececec;
-}
-
-/* タブコンテンツエリア */
+/* --- 全てのタブの高さを380pxに統一 --- */
 .tab-contents-item {
   display: none;
   width: 100%;
+  height: 380px; /* 固定高さ */
+  background-color: #ececec;
+  padding: 20px;
+  border-radius: 0 0 20px 20px;
   box-sizing: border-box;
+  color: #1e293b;
 }
 
 .tab-contents-item.is-active {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: #ececec;
-  padding: 20px;
-  border-radius: 0 0 20px 20px;
 }
 
-/* ボタンのデザイン */
+/* 動画エリアのスクロール設定 */
+.video-scroll-area {
+  overflow-y: auto;
+  flex-grow: 1;
+  touch-action: pan-y; /* ここだけ縦スクロールを許可 */
+}
+
+.tab-inner-title { font-size: 16px; margin: 0 0 10px 0; color: #334155; text-align: center; }
+
+/* 動画アイテムの見た目 */
+.video-item {
+  background: white; border-radius: 12px; padding: 8px; margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.video-item img { width: 100%; border-radius: 8px; }
+.video-item p { font-size: 13px; font-weight: bold; margin: 5px 0; }
+
+/* ボタン */
 .actions button {
-  width: 100%;
-  padding: 18px;
-  border: none;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  transition: all 0.2s;
+  width: 100%; padding: 16px; border: none; border-radius: 16px;
+  font-size: 16px; font-weight: bold; color: white; margin-bottom: 10px;
 }
-
 button:nth-child(1) { background: #4C9141; }
 button:nth-child(2) { background: #F15B55; }
 button:nth-child(3) { background: #38BDF8; }
