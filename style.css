@@ -8,6 +8,8 @@ body {
   justify-content: center;
   align-items: flex-start; /* 上に詰める */
   min-height: 100vh;
+  overflow: hidden;       /* スクロールを許可 */
+  position: fixed;
   padding-top: 30px;
 }
 
