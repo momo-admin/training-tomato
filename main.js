@@ -18,8 +18,11 @@ async function fetchYesterdayVideos() {
 
   // 判定範囲：一昨日の0時から（ライブアーカイブのラグ対策）
   const now = new Date();
-  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-  const publishedAfter = yesterday.toISOString(); 
+  //const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
+  //const publishedAfter = yesterday.toISOString();
+  const threeDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3);
+  threeDaysAgo.setHours(0, 0, 0, 0); 
+  const publishedAfter = threeDaysAgo.toISOString();
 
   try {
     // プレイリストIDではなく、チャンネルID指定の「検索(search)」に戻します
