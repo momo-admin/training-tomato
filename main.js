@@ -6,67 +6,82 @@ let lastUpdateDate = localStorage.getItem('lastUpdateDate') || "";
 let workoutMinutes = 0;
 
 // YouTube Data API設定
-const API_KEY = 'AIzaSyA0w8EBurxGe264lBzBxRG-bsHdE3nI_iU'; 
+const API_KEY = import.meta.env.VITE_TomatoYoutubeAPI || ''; 
 const CHANNEL_ID = 'UCt0yUptX9oR2T28Ua54pD3g'; // とまとなべさんのID
 
 async function fetchYesterdayVideos() {
   const container = document.getElementById('videoList');
-  
-  // 昨日の日付（0時0分0秒）を計算
+  if (!container) return;
+
+  // チャンネルID（とまとなべさん）
+  const CHANNEL_ID = 'UCt0yUptX9oR2T28Ua54pD3g'; 
+
+  // 判定範囲：一昨日の0時から（ライブアーカイブのラグ対策）
   const now = new Date();
-  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
   const publishedAfter = yesterday.toISOString(); 
 
   try {
+    // プレイリストIDではなく、チャンネルID指定の「検索(search)」に戻します
+    // type=video にすることで、動画とライブアーカイブの両方を検索対象にします
     const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&publishedAfter=${publishedAfter}&type=video`;
     
     const response = await fetch(url);
     const data = await response.json();
+
+    if (data.error) {
+      container.innerHTML = `<p style="color:red; font-size:12px;">理由: ${data.error.message}</p>`;
+      return;
+    }
 
     if (!data.items || data.items.length === 0) {
       container.innerHTML = '<p style="text-align:center;">昨日の投稿はありません</p>';
       return;
     }
 
-    container.innerHTML = data.items.map(v => `
-      <div class="video-item" onclick="window.open('https://youtube.com/watch?v=${v.id.videoId}')">
-        <img src="${v.snippet.thumbnails.medium.url}">
-        <p>${v.snippet.title}</p>
-      </div>
-    `).join('');
+    // 表示生成
+    container.innerHTML = data.items.map(v => {
+      const videoId = v.id.videoId;
+      const title = v.snippet.title;
+      const thumb = v.snippet.thumbnails.medium.url;
+
+      return `
+        <div class="video-item" onclick="window.open('https://youtube.com/watch?v=${videoId}')">
+          <img src="${thumb}">
+          <p>${title}</p>
+        </div>
+      `;
+    }).join('');
 
   } catch (error) {
-    container.innerHTML = '<p style="text-align:center;">動画の取得に失敗しました</p>';
+    container.innerHTML = '<p style="text-align:center;">通信エラーが発生しました</p>';
   }
 }
 
-// iPhone用タブ切り替え
+// --- 以下、タブ切り替えとロジック（変更なし） ---
+
 document.addEventListener('DOMContentLoaded', function() {
   const tabs = document.querySelectorAll('.tab-btn a');
   const contents = document.querySelectorAll('.tab-contents-item');
 
-  tabs[0].classList.add('is-active');
-  contents[0].classList.add('is-active');
+  if(tabs[0]) tabs[0].classList.add('is-active');
+  if(contents[0]) contents[0].classList.add('is-active');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', function(e) {
       e.preventDefault();
       const targetId = this.getAttribute('data-tab');
-
       tabs.forEach(t => t.classList.remove('is-active'));
       contents.forEach(c => c.classList.remove('is-active'));
-
       this.classList.add('is-active');
       const target = document.querySelector(targetId);
-      target.classList.add('is-active');
-
+      if(target) target.classList.add('is-active');
       if(targetId === '#menu2') fetchYesterdayVideos();
     });
   });
   updateDisplay();
 });
 
-// 筋トレ・貯金ロジック
 function addPost() { workoutMinutes += 10; moneySchedule += 100; saveAndSync(); updateDisplay(); }
 function doWorkout() {
   if (workoutMinutes > 0) workoutMinutes = Math.max(0, workoutMinutes - 10);
@@ -87,9 +102,9 @@ function saveAndSync() {
   localStorage.setItem('moneyTotal', moneyTotal);
 }
 function updateDisplay() {
-  document.getElementById('todayWorkout').innerText = workoutMinutes;
-  document.getElementById('debtWorkout').innerText = workoutDebt;
-  document.getElementById('scheduleMoney').innerText = moneySchedule;
-  document.getElementById('totalMoney').innerText = moneyTotal;
-  document.getElementById('continuationDate').innerText = dateContinuation;
+  if(document.getElementById('todayWorkout')) document.getElementById('todayWorkout').innerText = workoutMinutes;
+  if(document.getElementById('debtWorkout')) document.getElementById('debtWorkout').innerText = workoutDebt;
+  if(document.getElementById('scheduleMoney')) document.getElementById('scheduleMoney').innerText = moneySchedule;
+  if(document.getElementById('totalMoney')) document.getElementById('totalMoney').innerText = moneyTotal;
+  if(document.getElementById('continuationDate')) document.getElementById('continuationDate').innerText = dateContinuation;
 }
