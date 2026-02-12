@@ -28,6 +28,7 @@ async function fetchYesterdayVideos() {
     
     const response = await fetch(url);
     const data = await response.json();
+    console.log("YouTubeから届いたデータ:", data);
 
     if (data.error) {
       container.innerHTML = `<p style="color:red; font-size:12px;">理由: ${data.error.message}</p>`;
