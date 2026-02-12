@@ -13,31 +13,19 @@ async function fetchYesterdayVideos() {
   const container = document.getElementById('videoList');
   if (!container) return;
 
-  //判定範囲：一昨日の0時から
-  const now = new Date();
-  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-  const publishedAfter = yesterday.toISOString();
-
   try {
-    // プレイリストIDではなく、チャンネルID指定の「検索(search)」に戻します
-    // type=video にすることで、動画とライブアーカイブの両方を検索対象にします
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&publishedAfter=${publishedAfter}&type=video`;
-    
-    const response = await fetch(url);
+    // 自分のVercelサーバーにリクエスト（ここにはAPIキーが不要！）
+    const response = await fetch('/api/youtube');
     const data = await response.json();
-    console.log("YouTubeデータ詳細(3日):", JSON.stringify(data, null, 2));
-
-    if (data.error) {
-      container.innerHTML = `<p style="color:red; font-size:12px;">理由: ${data.error.message}</p>`;
-      return;
-    }
+    
+    console.log("サーバーから届いたデータ:", data);
 
     if (!data.items || data.items.length === 0) {
-      container.innerHTML = '<p style="text-align:center;">昨日の投稿はありません</p>';
+      container.innerHTML = '<p style="text-align:center;">最近の投稿はありません</p>';
       return;
     }
 
-    // 表示生成
+    // 表示部分は今までと同じ（v.id.videoId など）
     container.innerHTML = data.items.map(v => {
       const videoId = v.id.videoId;
       const title = v.snippet.title;
