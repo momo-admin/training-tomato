@@ -41,7 +41,7 @@ body {
 .tab-contents-item {
   display: none;
   width: 100%;
-  height: 380px; /* 固定高さ */
+  height: 280px; /* 固定高さ */
   max-hight: 90%;
   background-color: #ececec;
   padding: 20px;
