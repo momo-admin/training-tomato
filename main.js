@@ -7,14 +7,11 @@ let workoutMinutes = 0;
 
 // YouTube Data API設定
 const API_KEY = import.meta.env.VITE_TomatoYoutubeAPI || ''; 
-const CHANNEL_ID = 'UCt0yUptX9oR2T28Ua54pD3g'; // とまとなべさんのID
+const CHANNEL_ID = 'UC1YDj4nSuCIpHmv984mdggQ'; // ﾄﾏﾀﾝのID
 
 async function fetchYesterdayVideos() {
   const container = document.getElementById('videoList');
   if (!container) return;
-
-  // チャンネルID（とまとなべさん）
-  const CHANNEL_ID = 'UCt0yUptX9oR2T28Ua54pD3g'; 
 
   // 判定範囲：一昨日の0時から（ライブアーカイブのラグ対策）
   const now = new Date();
@@ -31,7 +28,7 @@ async function fetchYesterdayVideos() {
     
     const response = await fetch(url);
     const data = await response.json();
-    console.log("YouTubeデータ詳細:", JSON.stringify(data, null, 2));
+    console.log("YouTubeデータ詳細(3日):", JSON.stringify(data, null, 2));
 
     if (data.error) {
       container.innerHTML = `<p style="color:red; font-size:12px;">理由: ${data.error.message}</p>`;
