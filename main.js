@@ -109,3 +109,8 @@ function updateDisplay() {
   if(document.getElementById('totalMoney')) document.getElementById('totalMoney').innerText = moneyTotal;
   if(document.getElementById('continuationDate')) document.getElementById('continuationDate').innerText = dateContinuation;
 }
+
+window.addPost = addPost;
+window.doWorkout = doWorkout;
+window.skipWork = skipWork;
+window.doPayment = doPayment;
