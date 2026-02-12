@@ -5,9 +5,8 @@ export default async function handler(req, res) {
   
   // 3日前の日付を計算
   const now = new Date();
-  const threeDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3);
-  threeDaysAgo.setHours(0, 0, 0, 0);
-  const publishedAfter = threeDaysAgo.toISOString();
+  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
+  const publishedAfter = yesterday.toISOString();
 
   const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&publishedAfter=${publishedAfter}&type=video`;
 
