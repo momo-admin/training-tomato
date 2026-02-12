@@ -1,12 +1,12 @@
 /* --- スクロール完全禁止（iPhone対応） --- */
 html, body {
-  height: 100%;
+  height: 100dvh; /* 動的な画面高さに対応 */
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: hidden; 
   position: fixed;
-  touch-action: none;
+  touch-action: none; 
   background-color: #0f172a;
 }
 
@@ -16,15 +16,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 30px;
+  padding-top: env(safe-area-inset-top, 20px); /* iPhoneのノッチ対策 */
 }
 
-.app { width: 90%; max-width: 400px; }
+.app { width: 92%; max-width: 400px; }
+
+/* タイトル */
+h1 { font-size: 20px; text-align: center; margin-bottom: 20px; color: #38bdf8; }
 
 /* ステータス表示 */
-.status-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-.status-item { background: #334155; padding: 16px; border-radius: 20px; text-align: center; }
-#todayWorkout, #debtWorkout, #scheduleMoney, #totalMoney { font-size: 24px; font-weight: bold; margin-top: 8px; }
+.status-card { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.status-item { background: #334155; padding: 12px; border-radius: 18px; text-align: center; }
+#todayWorkout, #debtWorkout, #scheduleMoney, #totalMoney { font-size: 22px; font-weight: bold; margin-top: 5px; }
 
 /* タブボタン */
 .tab-btn { display: flex; width: 100%; }
@@ -32,59 +35,63 @@ body {
 .btn a {
   display: block; padding: 12px 0; background-color: #fff; color: #181716;
   text-decoration: none; font-weight: bold; border-radius: 15px 15px 0 0;
-  margin-right: 1px; text-align: center;
+  margin-right: 1px; text-align: center; font-size: 14px;
 }
 .btn:last-child a { margin-right: 0; }
 .btn a.is-active { background-color: #ececec; }
 
-/* --- 全てのタブの高さを380pxに統一 --- */
+/* --- 全てのタブの高さを機種に合わせて自動計算 --- */
 .tab-contents-item {
-  display: none;
+  display: none; 
   width: 100%;
-  /* 固定高さをやめて、中身に合わせる */
+  /* 100dvhから上部要素（h1+status+tabs+余白）の約320pxを引く */
+  height: calc(100dvh - 320px); 
   min-height: 280px; 
-  /* 画面の高さに対して最大値を決める（例：画面の50%まで） */
-  max-height: 60vh; 
-  /* 中身が溢れたらスクロールできるようにする */
-  overflow-y: auto; 
-  
   background-color: #ececec;
-  padding: 20px;
+  padding: 15px;
   border-radius: 0 0 20px 20px;
   box-sizing: border-box;
   color: #1e293b;
+  
+  /* タブ内スクロールを許可 */
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .tab-contents-item.is-active {
-  display: flex;
-  flex-direction: column;
+  display: block; 
 }
 
-/* 動画エリアのスクロール設定 */
-.video-scroll-area {
-  overflow-y: auto;
-  flex-grow: 1;
-  touch-action: pan-y; /* ここだけ縦スクロールを許可 */
+/* --- 動画リストを2列にする設定 --- */
+#videoList {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2列並び */
+  gap: 10px;
 }
 
-.tab-inner-title { font-size: 16px; margin: 0 0 10px 0; color: #334155; text-align: center; }
+.tab-inner-title { font-size: 15px; margin-bottom: 12px; color: #334155; text-align: center; font-weight: bold; grid-column: span 2; }
 
 /* 動画アイテムの見た目 */
 .video-item {
-  background: white; border-radius: 12px; padding: 8px; margin-bottom: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white; border-radius: 10px; padding: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
 }
-.video-item img { width: 100%; border-radius: 8px; }
-.video-item p { font-size: 13px; font-weight: bold; margin: 5px 0; }
+.video-item img { width: 100%; border-radius: 6px; aspect-ratio: 16 / 9; object-fit: cover; }
+.video-item p { 
+  font-size: 11px; font-weight: bold; margin: 6px 0 2px 0; 
+  line-height: 1.3; height: 2.6em; overflow: hidden; /* 2行で省略 */
+}
 
-/* ボタン */
+/* ボタン（筋トレ・設定タブ用） */
 .actions button {
-  width: 100%; padding: 16px; border: none; border-radius: 16px;
-  font-size: 16px; font-weight: bold; color: white; margin-bottom: 10px;
+  width: 100%; padding: 14px; border: none; border-radius: 14px;
+  font-size: 15px; font-weight: bold; color: white; margin-bottom: 10px;
+  cursor: pointer;
 }
 button:nth-child(1) { background: #4C9141; }
 button:nth-child(2) { background: #F15B55; }
 button:nth-child(3) { background: #38BDF8; }
-button:active { transform: scale(0.95); opacity: 0.8; }
-
-h1 { font-size: 20px; text-align: center; margin-bottom: 24px; color: #38bdf8; }
+button:active { transform: scale(0.96); opacity: 0.9; }
